@@ -4,7 +4,7 @@ rm repo/*
 
 for PACKAGE in packages/*; do
 	cd $PACKAGE
-	dkp-makepkg -sr --sign
+	dkp-makepkg --sign
 	cd ../..
 done
 
