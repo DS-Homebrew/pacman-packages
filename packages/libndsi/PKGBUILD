@@ -1,7 +1,7 @@
 # Maintainer: Pk11 <epicpkmn11@outlook.com>
 
 pkgname=('libndsi')
-pkgver='vTEST'
+pkgver='vTEST.2'
 pkgrel=1
 pkgdesc='Nintendo DS(i) library.'
 arch=('any')
@@ -12,11 +12,11 @@ source=(
   "${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/${pkgver}.tar.gz"
 )
 sha256sums=(
-  '027ca4c285b4ae24038035810dda3284329f6a88acfa419913a755d43ea10fae'
+  '84ced81ba0719d52915e7df3ee8f524767ee78af5e4ed796858ddc5f04ae3dc4'
 )
 depends=('devkitARM' 'devkitarm-rules' 'devkitarm-crtls')
 
-groups=('nds-dev')
+groups=('ndsi-dev')
 
 package() {
   make -C  $srcdir/${pkgname}-${pkgver} DESTDIR=$pkgdir install
