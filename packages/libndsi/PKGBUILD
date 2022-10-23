@@ -1,0 +1,23 @@
+# Maintainer: Pk11 <epicpkmn11@outlook.com>
+
+pkgname=('libndsi')
+pkgver='vTEST'
+pkgrel=1
+pkgdesc='Nintendo DS(i) library.'
+arch=('any')
+license=('zlib')
+url="http://github.com/DS-Homebrew/${pkgname}"
+options=(!strip libtool staticlibs)
+source=(
+  "${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/${pkgver}.tar.gz"
+)
+sha256sums=(
+  '027ca4c285b4ae24038035810dda3284329f6a88acfa419913a755d43ea10fae'
+)
+depends=('devkitARM' 'devkitarm-rules' 'devkitarm-crtls')
+
+groups=('nds-dev')
+
+package() {
+  make -C  $srcdir/${pkgname}-${pkgver} DESTDIR=$pkgdir install
+}
