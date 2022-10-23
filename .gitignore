@@ -7,5 +7,8 @@ pkg
 *.tar.zst
 *~
 !repo/*.tar.gz
+!repo/*.tar.bz2
+!repo/*.tar.zst
+!repo/*.pkg.tar.xz*
 
 *.DS_Store
