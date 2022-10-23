@@ -1,0 +1,10 @@
+*.tar.xz
+src
+pkg
+*.pkg.tar.xz*
+*.tar.gz
+*.tar.bz2
+*.tar.zst
+*~
+
+*.DS_Store
