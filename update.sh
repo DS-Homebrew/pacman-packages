@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rm repo/*.pkg.tar.xz*
+rm repo/*
 
 for PACKAGE in packages/*; do
 	cd $PACKAGE
@@ -8,6 +8,7 @@ for PACKAGE in packages/*; do
 	cd ../..
 done
 
-cp packages/*/*.pkg.tar.xz* repo
+mv packages/*/*.pkg.tar.xz* repo
 cd repo
 dkp-repo-add --verify --sign dsh-libs.db.tar.gz *.pkg.tar.xz
+cd ..
