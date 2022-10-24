@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>DS-Homebrew Pacman Repository</title>
+</head>
+<body>
+	<h1>DS-Homebrew Pacman Repository</h1>
+	<p><b>NOTE:</b> devkitPro pacman users should add <code>dkp-</code> to the start of every command. Windows users should not use <code>sudo</code>.</p>
+	How to add:
+	<ol>
+		<li>Add the key: <code>sudo pacman-key --recv 58FEA0CA2E5DD47D --keyserver keyserver.ubuntu.com</code></li>
+		<li>Verify the key: <code>sudo pacman-key --finger 58FEA0CA2E5DD47D</code></li>
+		<li>Locally sign the key: <code>sudo pacman-key --lsign 58FEA0CA2E5DD47D</code></li>
+		<li>
+			Add the following to the end of your <code>/etc/pacman.conf</code> or <code>$DEVKITPRO/pacman/etc/pacman.conf</code>:
+			<pre><code>[dsh-libs]
+Server = https://pacman.ds-homebrew.com/repo</code></pre>
+		</li>
+		<li>Update your pacman database: <code>sudo pacman -Sy</code></li>
+	</ol>
+</body>
+</html>
