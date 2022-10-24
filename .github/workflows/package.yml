@@ -2,13 +2,7 @@ name: Build database
 
 on:
   push:
-    branches: ["*"]
-    paths:
-      - "packages/*"
-      - ".github/workflows/*"
-      - "update.sh"
-  pull_request:
-    branches: ["*"]
+    branches: [main]
     paths:
       - "packages/*"
       - ".github/workflows/*"
@@ -32,22 +26,26 @@ jobs:
           echo '${{ secrets.GPG_PRIVATE_KEY }}' | sudo -u nobody gpg --batch --import
       - name: Build packages
         run: |
-          chown -R nobody packages
-          for PACKAGE in packages/*; do
+          chown -R nobody .
+          for PACKAGE in */; do
             cd "$PACKAGE"
             sudo -u nobody DEVKITPRO=$DEVKITPRO DEVKITARM=$DEVKITARM dkp-makepkg -sr
             echo '${{ secrets.GPG_PASSPHRASE }}' | gpg --detach-sign --pinentry-mode loopback --passphrase-fd 0 *.pkg.tar.xz
-            cd ../..
+            cd ..
           done
-          chown -R root packages
+          chown -R root .
+          mkdir /pkgtemp
+          mv */*.pkg.tar.xz* /pkgtemp
+      - name: Checkout repo branch
+        uses: actions/checkout@v3
+        with:
+          ref: repo
       - name: Create database
         run: |
-          cd repo
-          rm *
-          mv ../packages/*/*.pkg.tar.xz* .
+          rm -f *.{db,sig,tar.gz,tar.xz,.tar.bz2,.tar.zstd}
+          mv /pkgtemp/* .
           echo '${{ secrets.GPG_PASSPHRASE }}' | dkp-repo-add --verify --sign dsh-libs.db.tar.gz *.pkg.tar.xz
       - name: Commit to repo
-        if: ${{ github.ref == 'refs/heads/main' }}
         run: |
           git config user.email "flamekat54@aol.com"
           git config user.name "TWLBot"
@@ -60,9 +58,8 @@ jobs:
           echo "  login TWLBot" >> "$HOME/.netrc"
           echo "  password ${{ secrets.GITHUB_TOKEN }}" >> "$HOME/.netrc"
 
-          git checkout main
-          git stage repo
+          git stage .
           if git commit -m "Update package database"; then
-            git push origin main
+            git push origin repo
           fi
 
