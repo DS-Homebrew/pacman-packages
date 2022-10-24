@@ -86,8 +86,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
       - name: Install tools
-        run: sudo apt-get install fakeroot -y
-      - name: Install tools
         run: |
           curl -LO https://github.com/devkitPro/pacman/releases/latest/download/devkitpro-pacman-installer.pkg
           sudo installer -pkg devkitpro-pacman-installer.pkg -target /
