@@ -121,7 +121,7 @@ jobs:
     runs-on: ubuntu-latest
     container: devkitpro/devkitarm
     name: Push to repo
-    needs: [package]
+    needs: [libs, linux, osx]
     steps:
       - name: Checkout repo branch
         uses: actions/checkout@v3
