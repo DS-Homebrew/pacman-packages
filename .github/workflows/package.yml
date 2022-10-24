@@ -12,9 +12,17 @@ jobs:
   package:
     strategy:
       matrix:
-        os: [ubuntu-latest, ubuntu-latest, macos-latest]
-        folder: [libs, tools, tools]
         output: [libs, linux, osx]
+        include:
+          - output: libs
+            os: ubuntu-latest
+            folder: libs
+          - output: linux
+            os: ubuntu-latest
+            folder: tools
+          - output: osx
+            os: macos-latest
+            folder: tools
     runs-on: ${{ matrix.os }}
     container: devkitpro/devkitarm
     name: Update ${{ matrix.output }} database
