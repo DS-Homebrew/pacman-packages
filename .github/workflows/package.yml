@@ -53,6 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     container: devkitpro/devkitarm
     name: Push to repo
+    steps:
       - name: Checkout repo branch
         uses: actions/checkout@v3
         with:
