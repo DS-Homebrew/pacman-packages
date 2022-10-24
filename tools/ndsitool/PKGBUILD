@@ -1,0 +1,26 @@
+# Maintainer: Pk11 <epicpkmn11@outlook.com>
+
+pkgname=('ndsitool')
+pkgver='2.1.3'
+pkgrel=1
+pkgdesc='Nintendo DS(i) rom creation tool'
+arch=('x86_64')
+license=('GPL')
+url="http://github.com/DS-Homebrew/${pkgname}"
+options=(!strip libtool staticlibs)
+source=(
+  "${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz"
+)
+sha256sums=(
+  'a82cc4355b2625901dac220641ad5700a64087b30190a0cb2c3059d4588eebe8'
+)
+depends=('devkitARM' 'devkitarm-rules' 'devkitarm-crtls')
+
+groups=('ndsi-dev')
+
+package() {
+  cd $srcdir/${pkgname}-${pkgver}
+  ./autogen.sh
+  ./configure
+  make DESTDIR=$pkgdir install
+}
