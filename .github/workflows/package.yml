@@ -110,7 +110,6 @@ jobs:
           for PACKAGE in */; do
             cd "$PACKAGE"
             DEVKITPRO=$DEVKITPRO DEVKITARM=$DEVKITARM makepkg -sr
-            ls
             echo '${{ secrets.GPG_PASSPHRASE }}' | gpg --detach-sign --pinentry-mode loopback --passphrase-fd 0 *.pkg.tar.xz
             cd ..
           done
@@ -146,6 +145,7 @@ jobs:
           for PACKAGE in */; do
             cd "$PACKAGE"
             DEVKITPRO=$DEVKITPRO DEVKITARM=$DEVKITARM makepkg -sr
+            ls
             echo '${{ secrets.GPG_PASSPHRASE }}' | gpg --detach-sign --pinentry-mode loopback --passphrase-fd 0 *.pkg.tar.xz
             cd ..
           done
@@ -194,7 +194,6 @@ jobs:
           REPO=$(pwd)
           rm -f {{linux,osx,windows}/x86_64,.}/*.{db,sig,tar.gz,tar.xz,.tar.bz2,.tar.zstd}
           mkdir -p {linux,osx,windows}/x86_64
-          ls
 
           cd ~/downloads/libs
           echo '${{ secrets.GPG_PASSPHRASE }}' | dkp-repo-add --verify --sign dsh-libs.db.tar.gz *.pkg.tar.xz
@@ -202,8 +201,6 @@ jobs:
 
           cd ~/downloads/linux
           echo '${{ secrets.GPG_PASSPHRASE }}' | dkp-repo-add --verify --sign dsh-linux.db.tar.gz *.pkg.tar.xz
-          ls $REPO
-          ls $REPO/linux
           mv * $REPO/linux/x86_64
 
           cd ~/downloads/osx
