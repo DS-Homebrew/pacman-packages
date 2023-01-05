@@ -101,6 +101,7 @@ jobs:
           echo '${{ secrets.GPG_PRIVATE_KEY }}' | sudo -u runner gpg --batch --import
       - name: Build packages
         run: |
+          PATH=$DEVKITPRO/pacman/bin:$PATH
           cd tools
           chown -R runner .
           for PACKAGE in */; do
