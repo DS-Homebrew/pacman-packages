@@ -101,15 +101,14 @@ jobs:
           echo '${{ secrets.GPG_PRIVATE_KEY }}' | sudo -u runner gpg --batch --import
       - name: Build packages
         run: |
-          DEVKITPRO=/opt/devkitpro
-          DEVKITARM=$DEVKITPRO/devkitARM
-          PATH=$DEVKITPRO/pacman/bin:$PATH
-          ls $DEVKITPRO/pacman/bin
+          # DEVKITPRO=/opt/devkitpro
+          # DEVKITARM=$DEVKITPRO/devkitARM
+          # PATH=$DEVKITPRO/pacman/bin:$PATH
           cd tools
           chown -R runner .
           for PACKAGE in */; do
             cd "$PACKAGE"
-            sudo -u runner DEVKITPRO=$DEVKITPRO DEVKITARM=$DEVKITARM dkp-makepkg -sr
+            sudo -u runner DEVKITPRO=$DEVKITPRO DEVKITARM=$DEVKITARM makepkg -sr
             echo '${{ secrets.GPG_PASSPHRASE }}' | gpg --detach-sign --pinentry-mode loopback --passphrase-fd 0 *.pkg.tar.xz
             cd ..
           done
