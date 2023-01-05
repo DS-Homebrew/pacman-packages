@@ -104,7 +104,8 @@ jobs:
           DEVKITPRO=/opt/devkitpro
           DEVKITARM=$DEVKITPRO/devkitARM
           PATH=$DEVKITPRO/pacman/bin:$PATH
-          echo "#!/usr/bin/env bash\nexec /usr/bin/shasum -a256 \"$@\"" > /usr/local/bin/sha256sum
+          echo '#!/usr/bin/env bash
+          exec /usr/bin/shasum -a256 "$@"' > /usr/local/bin/sha256sum
           sudo chmod +x /usr/local/bin/sha256sum
 
           cd tools
