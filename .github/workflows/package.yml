@@ -148,13 +148,15 @@ jobs:
             echo '${{ secrets.GPG_PASSPHRASE }}' | gpg --detach-sign --pinentry-mode loopback --passphrase-fd 0 *.pkg.tar.xz
             cd ..
           done
-          mkdir ~/pkgtemp
-          mv */*.pkg.tar.xz* ~/pkgtemp
+          ls *
+          mkdir /pkgtemp
+          mv */*.pkg.tar.xz* /pkgtemp
+          ls /pkgtemp
       - name: Publish to Actions
         if: ${{ success() && !startsWith(github.ref, 'refs/pull') }}
         uses: actions/upload-artifact@v3
         with:
-          path: ~/pkgtemp/*
+          path: /pkgtemp/*
           name: windows
 
   push:
