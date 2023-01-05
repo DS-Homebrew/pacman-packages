@@ -110,11 +110,11 @@ jobs:
           for PACKAGE in */; do
             cd "$PACKAGE"
             DEVKITPRO=$DEVKITPRO DEVKITARM=$DEVKITARM makepkg -sr
+            ls
             echo '${{ secrets.GPG_PASSPHRASE }}' | gpg --detach-sign --pinentry-mode loopback --passphrase-fd 0 *.pkg.tar.xz
             cd ..
           done
           mkdir ~/pkgtemp
-          ls *
           mv */*.pkg.tar.xz* ~/pkgtemp
       - name: Publish to Actions
         if: ${{ success() && !startsWith(github.ref, 'refs/pull') }}
