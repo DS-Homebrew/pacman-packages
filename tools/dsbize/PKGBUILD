@@ -24,4 +24,8 @@ package() {
   gcc dsbize.c -o dsbize
   mkdir -p $PKGROOT/usr/local/bin
   mv dsbize $PKGROOT/usr/local/bin/dsbize
+
+  if [ "$(uname -s)" == "Darwin" ]; then
+    chmod 775 $PKGROOT/usr/local/bin/dsbize
+  fi
 }
