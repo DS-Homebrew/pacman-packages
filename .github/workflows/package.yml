@@ -96,8 +96,6 @@ jobs:
       - name: Import GPG key
         run: |
           echo '${{ secrets.GPG_PRIVATE_KEY }}' | GPG_TTY=$(tty) gpg --batch --import
-          # sudo mkdir /Users/nonexistent
-          # sudo chown nobody /Users/nonexistent
           echo '${{ secrets.GPG_PRIVATE_KEY }}' | gpg --batch --import
       - name: Build packages
         run: |
@@ -124,11 +122,41 @@ jobs:
           path: ~/pkgtemp/*
           name: osx
 
+  windows:
+    runs-on: windows-latest
+    name: Update windows database
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Import GPG key
+        shell: bash
+        run: |
+          echo '${{ secrets.GPG_PRIVATE_KEY }}' | GPG_TTY=$(tty) gpg --batch --import
+          echo '${{ secrets.GPG_PRIVATE_KEY }}' | gpg --batch --import
+      - name: Build packages
+        shell: bash
+        run: |
+          cd tools
+          for PACKAGE in */; do
+            cd "$PACKAGE"
+            DEVKITPRO=$DEVKITPRO DEVKITARM=$DEVKITARM makepkg -sr
+            echo '${{ secrets.GPG_PASSPHRASE }}' | gpg --detach-sign --pinentry-mode loopback --passphrase-fd 0 *.pkg.tar.xz
+            cd ..
+          done
+          mkdir ~/pkgtemp
+          mv */*.pkg.tar.xz* ~/pkgtemp
+      - name: Publish to Actions
+        if: ${{ success() && !startsWith(github.ref, 'refs/pull') }}
+        uses: actions/upload-artifact@v3
+        with:
+          path: ~/pkgtemp/*
+          name: windows
+
   push:
     runs-on: ubuntu-latest
     container: devkitpro/devkitarm
     name: Push to repo
-    needs: [libs, linux, osx]
+    needs: [libs, linux, osx, windows]
     steps:
       - name: Checkout repo branch
         uses: actions/checkout@v3
@@ -149,12 +177,17 @@ jobs:
         with:
           name: osx
           path: ~/downloads/osx
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: windows
+          path: ~/downloads/windows
       - name: Create database
         shell: bash
         run: |
           REPO=$(pwd)
-          rm -f {{linux,osx}/x86_64,.}/*.{db,sig,tar.gz,tar.xz,.tar.bz2,.tar.zstd}
-          mkdir -p {linux,osx}/x86_64
+          rm -f {{linux,osx,windows}/x86_64,.}/*.{db,sig,tar.gz,tar.xz,.tar.bz2,.tar.zstd}
+          mkdir -p {linux,osx,windows}/x86_64
           ls
 
           cd ~/downloads/libs
@@ -170,6 +203,10 @@ jobs:
           cd ~/downloads/osx
           echo '${{ secrets.GPG_PASSPHRASE }}' | dkp-repo-add --verify --sign dsh-osx.db.tar.gz *.pkg.tar.xz
           mv * $REPO/osx/x86_64
+
+          cd ~/downloads/windows
+          echo '${{ secrets.GPG_PASSPHRASE }}' | dkp-repo-add --verify --sign dsh-windows.db.tar.gz *.pkg.tar.xz
+          mv * $REPO/windows/x86_64
       - name: Commit to repo
         run: |
           git config user.email "flamekat54@aol.com"
