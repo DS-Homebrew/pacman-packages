@@ -144,8 +144,7 @@ jobs:
           cd tools
           for PACKAGE in */; do
             cd "$PACKAGE"
-            DEVKITPRO=$DEVKITPRO DEVKITARM=$DEVKITARM makepkg -sr
-            ls
+            DEVKITPRO=$DEVKITPRO DEVKITARM=$DEVKITARM PKGEXT=".pkg.tar.xz" makepkg -sr
             echo '${{ secrets.GPG_PASSPHRASE }}' | gpg --detach-sign --pinentry-mode loopback --passphrase-fd 0 *.pkg.tar.xz
             cd ..
           done
