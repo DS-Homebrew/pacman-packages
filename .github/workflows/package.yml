@@ -104,6 +104,8 @@ jobs:
           DEVKITPRO=/opt/devkitpro
           DEVKITARM=$DEVKITPRO/devkitARM
           PATH=$DEVKITPRO/pacman/bin:$PATH
+          alias sha256sum 'shasum -a256'
+
           cd tools
           chown -R runner .
           for PACKAGE in */; do
