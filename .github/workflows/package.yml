@@ -96,8 +96,8 @@ jobs:
       - name: Import GPG key
         run: |
           echo '${{ secrets.GPG_PRIVATE_KEY }}' | GPG_TTY=$(tty) gpg --batch --import
-          mkdir /Users/nonexistent
-          chown nobody /Users/nonexistent
+          sudo mkdir /Users/nonexistent
+          sudo chown nobody /Users/nonexistent
           echo '${{ secrets.GPG_PRIVATE_KEY }}' | sudo -u nobody gpg --batch --import
       - name: Build packages
         run: |
