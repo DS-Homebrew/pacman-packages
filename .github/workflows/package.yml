@@ -98,7 +98,7 @@ jobs:
           echo '${{ secrets.GPG_PRIVATE_KEY }}' | GPG_TTY=$(tty) gpg --batch --import
           # sudo mkdir /Users/nonexistent
           # sudo chown nobody /Users/nonexistent
-          echo '${{ secrets.GPG_PRIVATE_KEY }}' | sudo -u runner gpg --batch --import
+          echo '${{ secrets.GPG_PRIVATE_KEY }}' | gpg --batch --import
       - name: Build packages
         run: |
           DEVKITPRO=/opt/devkitpro
@@ -109,21 +109,19 @@ jobs:
           sudo chmod +x /usr/local/bin/sha256sum
 
           cd tools
-          sudo chown -R runner .
           for PACKAGE in */; do
             cd "$PACKAGE"
-            sudo -u runner DEVKITPRO=$DEVKITPRO DEVKITARM=$DEVKITARM makepkg -sr
+            DEVKITPRO=$DEVKITPRO DEVKITARM=$DEVKITARM makepkg -sr
             echo '${{ secrets.GPG_PASSPHRASE }}' | gpg --detach-sign --pinentry-mode loopback --passphrase-fd 0 *.pkg.tar.xz
             cd ..
           done
-          sudo chown -R root .
-          mkdir /pkgtemp
-          mv */*.pkg.tar.xz* /pkgtemp
+          mkdir ~/pkgtemp
+          mv */*.pkg.tar.xz* ~/pkgtemp
       - name: Publish to Actions
         if: ${{ success() && !startsWith(github.ref, 'refs/pull') }}
         uses: actions/upload-artifact@v3
         with:
-          path: /pkgtemp/*
+          path: ~/pkgtemp/*
           name: osx
 
   push:
