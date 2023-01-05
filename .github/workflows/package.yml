@@ -150,6 +150,7 @@ jobs:
           name: osx
           path: ~/downloads/osx
       - name: Create database
+        shell: bash
         run: |
           REPO=$(pwd)
           rm -f {{linux,osx}/x86_64,.}/*.{db,sig,tar.gz,tar.xz,.tar.bz2,.tar.zstd}
