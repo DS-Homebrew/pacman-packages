@@ -132,7 +132,7 @@ jobs:
         uses: msys2/setup-msys2@v2
       - name: Install tools
         shell: msys2 {0}
-        run: pacman -S gcc
+        run: pacman --no-confirm -S gcc
       - name: Import GPG key
         shell: msys2 {0}
         run: |
