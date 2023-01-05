@@ -104,6 +104,7 @@ jobs:
           DEVKITPRO=/opt/devkitpro
           DEVKITARM=$DEVKITPRO/devkitARM
           PATH=$DEVKITPRO/pacman/bin:$PATH
+          ls $DEVKITPRO/pacman/bin
           cd tools
           chown -R runner .
           for PACKAGE in */; do
