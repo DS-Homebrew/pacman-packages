@@ -151,9 +151,9 @@ jobs:
           path: ~/downloads/osx
       - name: Create database
         run: |
-          rm -f {{linux,osx}/x86_64,.}/*.{db,sig,tar.gz,tar.xz,.tar.bz2,.tar.zstd}
-          mkdir -p {linux,osx}/x86_64
           REPO=$(pwd)
+          rm -f {{linux,osx}/x86_64,.}/*.{db,sig,tar.gz,tar.xz,.tar.bz2,.tar.zstd}
+          mkdir -p "$REPO/{linux,osx}/x86_64"
 
           cd ~/downloads/libs
           echo '${{ secrets.GPG_PASSPHRASE }}' | dkp-repo-add --verify --sign dsh-libs.db.tar.gz *.pkg.tar.xz
