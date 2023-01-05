@@ -90,8 +90,9 @@ jobs:
       - name: Install tools
         run: |
           # curl -LO https://github.com/devkitPro/pacman/releases/latest/download/devkitpro-pacman-installer.pkg
-          curl -L https://files.catbox.moe/3l04c0.pkg -o devkitpro-pacman-installer.pkg
-          sudo installer -pkg devkitpro-pacman-installer.pkg -target /
+          # sudo installer -pkg devkitpro-pacman-installer.pkg -target /
+          curl -LO https://files.catbox.moe/oa324w.7z
+          sudo 7z x -o/opt oa324w.7z
       - name: Import GPG key
         run: |
           echo '${{ secrets.GPG_PRIVATE_KEY }}' | GPG_TTY=$(tty) gpg --batch --import
