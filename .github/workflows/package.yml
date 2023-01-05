@@ -153,7 +153,7 @@ jobs:
         run: |
           REPO=$(pwd)
           rm -f {{linux,osx}/x86_64,.}/*.{db,sig,tar.gz,tar.xz,.tar.bz2,.tar.zstd}
-          mkdir -p "$REPO/{linux,osx}/x86_64"
+          mkdir -p {linux,osx}/x86_64
           ls
 
           cd ~/downloads/libs
@@ -163,6 +163,7 @@ jobs:
           cd ~/downloads/linux
           echo '${{ secrets.GPG_PASSPHRASE }}' | dkp-repo-add --verify --sign dsh-linux.db.tar.gz *.pkg.tar.xz
           ls $REPO
+          ls $REPO/linux
           mv * $REPO/linux/x86_64
 
           cd ~/downloads/osx
