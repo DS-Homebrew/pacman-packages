@@ -26,6 +26,6 @@ package() {
   mv dsbize $PKGROOT/usr/local/bin/dsbize
 
   if [ "$(uname -s)" == "Darwin" ]; then
-    chmod 775 $PKGROOT/usr/local/bin/dsbize
+    chmod -R 775 $PKGROOT/usr/local/bin
   fi
 }
