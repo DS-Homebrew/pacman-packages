@@ -128,13 +128,15 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+      - name: Setup msys2
+        uses: msys2/setup-msys2@v2
       - name: Import GPG key
-        shell: bash
+        shell: msys2 {0}
         run: |
           echo '${{ secrets.GPG_PRIVATE_KEY }}' | GPG_TTY=$(tty) gpg --batch --import
           echo '${{ secrets.GPG_PRIVATE_KEY }}' | gpg --batch --import
       - name: Build packages
-        shell: bash
+        shell: msys2 {0}
         run: |
           cd tools
           for PACKAGE in */; do
