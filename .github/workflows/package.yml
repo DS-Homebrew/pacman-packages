@@ -109,14 +109,14 @@ jobs:
           sudo chmod +x /usr/local/bin/sha256sum
 
           cd tools
-          chown -R runner .
+          sudo chown -R runner .
           for PACKAGE in */; do
             cd "$PACKAGE"
             sudo -u runner DEVKITPRO=$DEVKITPRO DEVKITARM=$DEVKITARM makepkg -sr
             echo '${{ secrets.GPG_PASSPHRASE }}' | gpg --detach-sign --pinentry-mode loopback --passphrase-fd 0 *.pkg.tar.xz
             cd ..
           done
-          chown -R root .
+          sudo chown -R root .
           mkdir /pkgtemp
           mv */*.pkg.tar.xz* /pkgtemp
       - name: Publish to Actions
