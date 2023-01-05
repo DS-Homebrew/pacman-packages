@@ -4,9 +4,9 @@ on:
   push:
     branches: [main, tools]
     paths:
-      - "packages/*"
+      - "libs/*"
+      - "tools/*"
       - ".github/workflows/*"
-      - "update.sh"
 
 jobs:
   libs:
