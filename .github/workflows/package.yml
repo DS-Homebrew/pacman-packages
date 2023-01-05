@@ -155,15 +155,15 @@ jobs:
           rm -f {{linux,osx}/x86_64,.}/*.{db,sig,tar.gz,tar.xz,.tar.bz2,.tar.zstd}
           REPO=$(pwd)
 
-          cd ${{ github.workspace }}/libs
+          cd /__w/pacman-packages/pacman-packages/libs
           echo '${{ secrets.GPG_PASSPHRASE }}' | dkp-repo-add --verify --sign dsh-libs.db.tar.gz *.pkg.tar.xz
           mv * $REPO
 
-          cd ${{ github.workspace }}/linux
+          cd /__w/pacman-packages/pacman-packages/linux
           echo '${{ secrets.GPG_PASSPHRASE }}' | dkp-repo-add --verify --sign dsh-linux.db.tar.gz *.pkg.tar.xz
           mv * $REPO/linux/x86_64
 
-          cd ${{ github.workspace }}/osx
+          cd /__w/pacman-packages/pacman-packages/osx
           echo '${{ secrets.GPG_PASSPHRASE }}' | dkp-repo-add --verify --sign dsh-osx.db.tar.gz *.pkg.tar.xz
           mv * $REPO/osx/x86_64
       - name: Commit to repo
