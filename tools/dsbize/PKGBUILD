@@ -19,7 +19,9 @@ sha256sums=(
 groups=('ndsi-dev')
 
 package() {
+  PKGROOT="../pkg/$pkgname"
+
   gcc dsbize.c -o dsbize
-  mkdir -p ../pkg/usr/local/bin
-  mv dsbize ../pkg/usr/local/bin/dsbize
+  mkdir -p $PKGROOT/usr/local/bin
+  mv dsbize $PKGROOT/usr/local/bin/dsbize
 }
