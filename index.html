@@ -14,9 +14,24 @@
 		<li>Verify the key: <code>sudo pacman-key --finger 58FEA0CA2E5DD47D</code></li>
 		<li>Locally sign the key: <code>sudo pacman-key --lsign 58FEA0CA2E5DD47D</code></li>
 		<li>
-			Add the following to the end of your <code>/etc/pacman.conf</code> or <code>$DEVKITPRO/pacman/etc/pacman.conf</code>:
+			<p>Add the following to the end of your <code>/etc/pacman.conf</code> or <code>$DEVKITPRO/pacman/etc/pacman.conf</code>:</p>
+			<p><b>All OSes:</b></p>
 			<pre><code>[dsh-libs]
 Server = https://pacman.ds-homebrew.com/</code></pre>
+			<ul>
+				<li>
+					<b>macOS:</b> <pre><code>[dsh-osx]
+Server = https://pacman.ds-homebrew.com/osx/$arch/</code></pre>
+				</li>
+				<li>
+					<b>Linux:</b> <pre><code>[dsh-linux]
+Server = https://pacman.ds-homebrew.com/linux/$arch/</code></pre>
+				</li>
+				<li>
+					<b>Windows:</b> <pre><code>[dsh-windows]
+Server = https://pacman.ds-homebrew.com/windows/$arch/</code></pre>
+				</li>
+			</ul>
 		</li>
 		<li>Update your pacman database: <code>sudo pacman -Sy</code></li>
 	</ol>
