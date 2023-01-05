@@ -104,7 +104,7 @@ jobs:
           DEVKITPRO=/opt/devkitpro
           DEVKITARM=$DEVKITPRO/devkitARM
           PATH=$DEVKITPRO/pacman/bin:$PATH
-          alias sha256sum 'shasum -a256'
+          alias sha256sum='shasum -a256'
 
           cd tools
           chown -R runner .
