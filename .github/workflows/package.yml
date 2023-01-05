@@ -114,6 +114,7 @@ jobs:
             cd ..
           done
           mkdir ~/pkgtemp
+          ls *
           mv */*.pkg.tar.xz* ~/pkgtemp
       - name: Publish to Actions
         if: ${{ success() && !startsWith(github.ref, 'refs/pull') }}
