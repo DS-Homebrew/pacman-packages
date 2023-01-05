@@ -96,16 +96,16 @@ jobs:
       - name: Import GPG key
         run: |
           echo '${{ secrets.GPG_PRIVATE_KEY }}' | GPG_TTY=$(tty) gpg --batch --import
-          sudo mkdir /Users/nonexistent
-          sudo chown nobody /Users/nonexistent
-          echo '${{ secrets.GPG_PRIVATE_KEY }}' | sudo -u nobody gpg --batch --import
+          # sudo mkdir /Users/nonexistent
+          # sudo chown nobody /Users/nonexistent
+          echo '${{ secrets.GPG_PRIVATE_KEY }}' | sudo -u runner gpg --batch --import
       - name: Build packages
         run: |
           cd tools
-          chown -R nobody .
+          chown -R runner .
           for PACKAGE in */; do
             cd "$PACKAGE"
-            sudo -u nobody DEVKITPRO=$DEVKITPRO DEVKITARM=$DEVKITARM dkp-makepkg -sr
+            sudo -u runner DEVKITPRO=$DEVKITPRO DEVKITARM=$DEVKITARM dkp-makepkg -sr
             echo '${{ secrets.GPG_PASSPHRASE }}' | gpg --detach-sign --pinentry-mode loopback --passphrase-fd 0 *.pkg.tar.xz
             cd ..
           done
