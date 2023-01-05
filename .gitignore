@@ -1,6 +1,7 @@
 *.tar.xz
-src
-pkg
+*src
+*pkg
+*.c
 *.pkg.tar.xz*
 *.tar.gz
 *.tar.bz2

@@ -1,0 +1,25 @@
+# Maintainer: Pk11 <epicpkmn11@outlook.com>
+
+pkgname=('dsbize')
+pkgver='1.0.0'
+pkgrel=0
+pkgdesc='dsbize (dsbooter-ize)'
+arch=('x86_64')
+license=('GPL')
+url="http://github.com/DS-Homebrew/${pkgname}"
+options=(!strip libtool staticlibs)
+source=(
+  # "${pkgname}-${pkgver}.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz"
+  "dsbize.c::https://raw.githubusercontent.com/lifehackerhansol/flashcard-bootstrap/master/resource/dsbize/dsbize.c"
+)
+sha256sums=(
+  '72e3f52ffe521e3cc697f0f6d179db9a366b1dfc7d9e2c1624d658579369dd0f'
+)
+depends=('devkitARM' 'devkitarm-rules' 'devkitarm-crtls')
+
+groups=('ndsi-dev')
+
+package() {
+  gcc dsbize.c -o dsbize
+  mv dsbize ../pkg/dsbize
+}
