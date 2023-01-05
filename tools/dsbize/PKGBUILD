@@ -20,5 +20,6 @@ groups=('ndsi-dev')
 
 package() {
   gcc dsbize.c -o dsbize
-  mv dsbize ../pkg/dsbize
+  mkdir -p ../pkg/usr/local/bin
+  mv dsbize ../pkg/usr/local/bin/dsbize
 }
