@@ -130,6 +130,9 @@ jobs:
         uses: actions/checkout@v3
       - name: Setup msys2
         uses: msys2/setup-msys2@v2
+      - name: Install tools
+        shell: msys2 {0}
+        run: pacman -S gcc
       - name: Import GPG key
         shell: msys2 {0}
         run: |
@@ -226,4 +229,3 @@ jobs:
           if git commit -m "Update package database"; then
             git push origin repo
           fi
-# run please
