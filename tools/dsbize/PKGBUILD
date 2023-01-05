@@ -15,7 +15,6 @@ source=(
 sha256sums=(
   '72e3f52ffe521e3cc697f0f6d179db9a366b1dfc7d9e2c1624d658579369dd0f'
 )
-depends=('devkitARM' 'devkitarm-rules' 'devkitarm-crtls')
 
 groups=('ndsi-dev')
 
